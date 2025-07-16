@@ -1,5 +1,3 @@
-import TestComponent from "./_components/test";
-
 export default function Home() {
   return (
     <div className="flex">
