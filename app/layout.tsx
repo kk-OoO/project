@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full max-w-9/10 mx-auto`}>
         <div className="">
           <header className="flex items-end justify-between border-b-2">
-            <h1 className="text-8xl">title</h1>
+            <Link href={"/"} className="text-8xl">Jawort</Link>
             <Link href={"/login"}>ログイン</Link>
           </header>
           <main>
