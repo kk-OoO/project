@@ -1,12 +1,12 @@
-import { createClient } from "@/lib/supabase/server";
-
-export default async function Home() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+export default function Home() {
   return (
     <div>
-      <h1>こんにちは、{data.user?.email}</h1>
-      <h1>Home</h1>
+      <h1 className="inline mx-auto border-b-1 text-2xl mt-6">
+        作成した結婚式プラン
+      </h1>
+      <h1 className="inline mx-auto border-b-1 text-2xl mt-6">
+        ブックマークした式場
+      </h1>
     </div>
   );
 }

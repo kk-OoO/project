@@ -23,14 +23,14 @@ export default function Guide() {
   return (
     <div>
       <div className="text-center">
-        <h2 className="inline mx-auto border-b-1 text-2xl">ご利用方法</h2>
+        <h2 className="inline mx-auto border-b-1 text-2xl mt-6">ご利用方法</h2>
       </div>
       <div className="flex justify-between">
         {array.map((item, index) => (
           <div key={index} className="flex items-center">
             <Card text={item.text} detail={item.detail} />
             {index < array.length - 1 && (
-              <Image src="/arrow.svg" alt="arrow" width={24} height={24} />
+              <Image src="/arrow.svg" alt="arrow" width={48} height={48} />
             )}
           </div>
         ))}
