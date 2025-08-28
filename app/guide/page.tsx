@@ -27,8 +27,12 @@ export default function Guide() {
       </div>
       <div className="flex justify-between">
         {array.map((item, index) => (
-          <Card key={index} text={item.text} detail={item.detail} />
-          {(index < array.length - 1) && <Image src={"/arrow.svg"} alt="arrow" />}
+          <div key={index} className="flex items-center">
+            <Card text={item.text} detail={item.detail} />
+            {index < array.length - 1 && (
+              <Image src="/arrow.svg" alt="arrow" width={24} height={24} />
+            )}
+          </div>
         ))}
       </div>
     </div>
