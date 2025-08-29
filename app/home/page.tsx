@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-col">
       <h1 className="inline mx-auto border-b-1 text-2xl mt-6">
         作成した結婚式プラン
       </h1>

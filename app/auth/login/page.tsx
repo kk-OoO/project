@@ -3,9 +3,11 @@ import { login } from "../actions";
 
 export default function Login() {
   return (
-    <div className="bg-gray-200 flex max-w-4xl mx-auto p-20 mt-10 justify-between">
+    <div className="bg-gray-200 flex max-w-4xl mx-auto p-20 mt-10 justify-center gap-48">
       <div className="flex flex-col items-center p-5">
-        <h1 className="text-center m-5">ログイン</h1>
+        <h1 className="text-center m-5 border-b border-black text-2xl mt-6">
+          ログイン
+        </h1>
         <form className="flex flex-col items-center">
           <input
             id="email"
@@ -31,7 +33,9 @@ export default function Login() {
       </div>
 
       <div className="p-5">
-        <h1 className="text-center m-5 mb-38">新規登録</h1>
+        <h1 className="text-center m-5 mb-38 border-b border-black text-2xl">
+          新規登録
+        </h1>
         <div>
           <Link
             href={"/auth/signup"}

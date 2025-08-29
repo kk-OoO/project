@@ -34,9 +34,15 @@ export default async function RootLayout({
       >
         <div className="">
           <header className="flex items-end justify-between border-b-2">
-            <Link href={"/"} className="text-8xl">
-              Jawort
-            </Link>
+            {data.user ? (
+              <Link href={"./home"} className="text-8xl">
+                Jawort
+              </Link>
+            ) : (
+              <Link href={"/"} className="text-8xl">
+                Jawort
+              </Link>
+            )}
             {data.user ? (
               <h1>
                 こんにちは、<Link href="mypage">{data.user?.email}</Link>
@@ -47,8 +53,8 @@ export default async function RootLayout({
           </header>
           <main>
             <div className="divide-x-2 text-center m-5">
-              <Link href={"/invitation"} className="px-2">
-                オンライン招待状の作成
+              <Link href={"/plan"} className="px-2">
+                結婚式プラン
               </Link>
               <Link href={"/search_chapel"} className="px-2">
                 式場を探す

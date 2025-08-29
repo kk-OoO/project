@@ -22,10 +22,10 @@ const array = [
 export default function Guide() {
   return (
     <div>
-      <div className="text-center">
-        <h2 className="inline mx-auto border-b-1 text-2xl mt-6">ご利用方法</h2>
+      <div className="text-center pt-15 pb-20">
+        <h2 className="inline mx-auto border-b-1 text-2xl ">ご利用方法</h2>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-center items-center gap-0">
         {array.map((item, index) => (
           <div key={index} className="flex items-center">
             <Card text={item.text} detail={item.detail} />
