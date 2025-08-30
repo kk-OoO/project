@@ -26,17 +26,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full max-w-9/10 mx-auto`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full max-w-9/10 mx-auto`}
+      >
         <div className="">
           <header className="flex items-end justify-between border-b-2">
-            <Link href={"/"} className="text-8xl">Jawort</Link>
-            <Link href={"/login"}>ログイン</Link>
+            <Link href={"/"} className="text-8xl">
+              Jawort
+            </Link>
+            <Link href={"/auth/login"}>ログイン</Link>
           </header>
           <main>
             <div className="divide-x-2 text-center m-5">
-              <Link href={"/invitation"} className="px-2">オンライン招待状の作成</Link>
-              <Link href={"/search_chapel"} className="px-2">式場を探す</Link>
-              <Link href={"/guide"} className="px-2">使い方ガイド</Link>
+              <Link href={"/invitation"} className="px-2">
+                オンライン招待状の作成
+              </Link>
+              <Link href={"/search_chapel"} className="px-2">
+                式場を探す
+              </Link>
+              <Link href={"/guide"} className="px-2">
+                使い方ガイド
+              </Link>
             </div>
           </main>
         </div>
