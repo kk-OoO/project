@@ -86,3 +86,13 @@ export async function getProfile(id?: string) {
 
   return profile.json();
 }
+
+export async function signOut() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    redirect("/error");
+  }
+  revalidatePath("/", "layout");
+  redirect("/");
+}
