@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { getProfile } from "@/features/auth/fetchers";
+import { profiles } from "@prisma/client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +28,7 @@ export default async function RootLayout({
 }>) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
+  const profile: profiles = await getProfile(data.user?.id);
 
   return (
     <html lang="en">
@@ -45,7 +48,7 @@ export default async function RootLayout({
             )}
             {data.user ? (
               <h1>
-                こんにちは、<Link href="mypage">{data.user?.email}</Link>
+                こんにちは、<Link href="mypage">{profile.username}</Link>
               </h1>
             ) : (
               <Link href={"/auth/login"}>ログイン</Link>
