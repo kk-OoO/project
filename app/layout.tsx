@@ -25,7 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
   return (
     <html lang="en">
@@ -55,6 +55,9 @@ export default async function RootLayout({
             <div className="divide-x-2 text-center m-5">
               <Link href={"/plan"} className="px-2">
                 結婚式プラン
+              </Link>
+              <Link href={"/invitation"} className="px-2">
+                オンライン招待状の作成
               </Link>
               <Link href={"/search_chapel"} className="px-2">
                 式場を探す
