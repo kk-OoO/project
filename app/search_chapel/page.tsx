@@ -1,24 +1,19 @@
-export default function Search_chapel() {
-  const regions = [
-    { name: "北海道", key: "hokkaido" },
-    { name: "東北", key: "tohoku" },
-    { name: "関東", key: "kanto" },
-    { name: "中部", key: "chubu" },
-    { name: "近畿", key: "kinki" },
-    { name: "中国", key: "chugoku" },
-    { name: "四国", key: "shikoku" },
-    { name: "九州", key: "kyushu" },
-    { name: "沖縄", key: "okinawa" }
-  ];
+"use client";
 
+import Chapels from "@/features/search_chapel/components/chapels";
+import RegionNavigation from "@/features/search_chapel/components/navigation";
+import { useState } from "react";
+
+export default function Search_chapel() {
+  const [region, setRegion] = useState<{ name: string; key: string }>({
+    name: "",
+    key: "",
+  });
   return (
     <div className="">
-      <div className="flex divide-x-2 justify-center">
-        {regions.map((region) => (
-          <nav key={region.key} className="px-2">{region.name}</nav>
-        ))}
-
-      </div>
+      <RegionNavigation setRegion={setRegion} />
+      {region.key != "" ? <h1>{region.name}の式場一覧</h1> : null}
+      <Chapels region={region.key} />
     </div>
-  )
+  );
 }
