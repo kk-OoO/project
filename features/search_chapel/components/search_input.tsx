@@ -18,6 +18,7 @@ export default function SearchChapel({ setData }: Props) {
     return () => clearTimeout(timer);
   }, [inputValue]);
 
+  //nameが変わったら実行する
   useEffect(() => {
     const fetchData = async () => {
       const data = await getChapel(name);
@@ -27,12 +28,13 @@ export default function SearchChapel({ setData }: Props) {
   }, [name, setData]);
 
   return (
-    <div>
+    <div className="text-right">
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Chapel名を検索..."
+        className="w-3xs h-12 border-2 rounded-full pl-3"
       />
     </div>
   );

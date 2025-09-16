@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { FormState, SignupFormSchema } from "./types";
 import z from "zod";
+import { profiles } from "@prisma/client";
+import { UpdateProfileForm } from "../edit_profile/types";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -31,6 +33,7 @@ export async function signup(state: FormState, formData: FormData) {
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
+    gender: formData.get("gender"),
     password: formData.get("password"),
   });
 
@@ -42,6 +45,7 @@ export async function signup(state: FormState, formData: FormData) {
       errors: {
         name: treeifiedError.properties?.name?.errors,
         email: treeifiedError.properties?.email?.errors,
+        gender: treeifiedError.properties?.gender?.errors,
         password: treeifiedError.properties?.password?.errors,
       },
     };
@@ -57,6 +61,7 @@ export async function signup(state: FormState, formData: FormData) {
     options: {
       data: {
         username: validatedFields.data.name,
+        gender: validatedFields.data.gender,
       },
     },
   };
@@ -95,4 +100,22 @@ export async function signOut() {
   }
   revalidatePath("/", "layout");
   redirect("/");
+}
+
+export async function updateProfile(profile: UpdateProfileForm) {
+  console.log(profile);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/updateProfile`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ profile }),
+    }
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return response.json();
 }

@@ -12,7 +12,11 @@ export default function Search_chapel() {
   return (
     <div className="">
       <RegionNavigation setRegion={setRegion} />
-      {region.key != "" ? <h1>{region.name}の式場一覧</h1> : null}
+      {region.key != "" ? (
+        <h1 className="inline border-b text-2xl mt-6">
+          {region.name}の式場一覧
+        </h1>
+      ) : null}
       <Chapels region={region.key} />
     </div>
   );

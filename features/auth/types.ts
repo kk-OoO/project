@@ -9,6 +9,9 @@ export const SignupFormSchema = z.object({
     .string()
     .email({ message: "有効なメールアドレスを入力してください。" })
     .trim(),
+  gender: z.string({
+    message: "性別を選択してください。",
+  }),
   password: z
     .string()
     .min(8, { message: "8文字以上で入力してください。" })
@@ -27,6 +30,7 @@ export type FormState =
       errors?: {
         name?: string[];
         email?: string[];
+        gender?: string[];
         password?: string[];
       };
       message?: string;
@@ -36,4 +40,5 @@ export type FormState =
 export type Profile = {
   id: string;
   username: string;
+  gender: string;
 };

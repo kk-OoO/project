@@ -34,6 +34,20 @@ export default function SignupForm() {
         {state?.errors?.email && <p>{state.errors.email}</p>}
 
         <div>
+          <label htmlFor="gender">性別</label>
+          <select
+            id="gender"
+            name="gender"
+            className="border-b border-b-black m-2 p-2 bg-transparent focus:outline-none"
+          >
+            <option value="">選択してください</option>
+            <option value="女">女</option>
+            <option value="男">男</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div>
           <label htmlFor="password">Password</label>
           <input
             id="password"
