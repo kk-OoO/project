@@ -6,15 +6,13 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { id, username, profile_image, region, age, gender } = body;
+    const { id, username, profile_image, region, age, gender } = body.profile;
 
     if (!id) {
       return new Response(JSON.stringify({ message: "ユーザーIDが必要です" }), {
         status: 400,
       });
     }
-
-    console.log(body);
 
     const updatedProfile = await prisma.profiles.update({
       where: { id },

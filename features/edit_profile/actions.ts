@@ -44,7 +44,6 @@ export async function UpdateProfileAction(
     region: validatedFields.data.region,
     age: validatedFields.data.age ? Number(validatedFields.data.age) : null,
   };
-  console.log("ssssssss");
   const response = await updateProfile(inputData);
 
   if (!response) {

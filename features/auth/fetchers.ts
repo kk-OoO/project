@@ -103,7 +103,6 @@ export async function signOut() {
 }
 
 export async function updateProfile(profile: UpdateProfileForm) {
-  console.log(profile);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/updateProfile`,
     {

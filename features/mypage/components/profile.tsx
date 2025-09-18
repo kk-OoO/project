@@ -13,7 +13,7 @@ export default function Profile({ profile }: Props) {
       <p>{profile.username}</p>
       <p>年齢: {profile?.age ?? "未設定"}</p>
       <p>性別: {profile?.gender ?? "未設定"}</p>
-      <p>地域: {profile?.region ?? "未設定"}</p>
+      <p>地域: {profile?.region ?? "未設定"}地方</p>
     </div>
   );
 }

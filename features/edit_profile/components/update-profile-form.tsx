@@ -16,20 +16,17 @@ export default function UpdateProfileForm(profile: profiles) {
       <form action={action} className="flex flex-col items-center p-5">
         <div>
           <label>ユーザー名</label>
-          <input
-            id="username"
-            name="username"
-            placeholder={profile.username || ""}
-          />
+          <input id="username" name="username" value={profile.username || ""} />
         </div>
         {state?.errors?.username && <p>{state.errors.username}</p>}
 
         <div>
           <label>プロフィール画像URL</label>
           <input
+            type="file"
             id="profile_image"
             name="profile_image"
-            placeholder={profile.profile_image || ""}
+            value={profile.profile_image || ""}
           />
         </div>
         {state?.errors?.profile_image && <p>{state.errors.profile_image}</p>}
@@ -57,7 +54,7 @@ export default function UpdateProfileForm(profile: profiles) {
             type="number"
             id="age"
             name="age"
-            placeholder={String(profile.age ?? "")}
+            value={String(profile.age ?? "")}
           />
         </div>
 
