@@ -16,8 +16,6 @@ type Review = {
 export default function ReviewsComponent({ chapelId }: { chapelId: number }) {
   const [data, setData] = useState<Review[]>([]);
 
-  console.log(data);
-
   useEffect(() => {
     const fetchData = async () => {
       const data = await getReviewByChapelId(chapelId);

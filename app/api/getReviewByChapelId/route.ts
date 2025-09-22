@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
 
     return Response.json(serializedReviews);
   } catch (err) {
-    console.log(err);
     return new Response(JSON.stringify({ message: String(err) }), {
       status: 500,
     });

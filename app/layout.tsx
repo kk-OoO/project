@@ -29,7 +29,6 @@ export default async function RootLayout({
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   const profile: profiles = await getProfile(data.user?.id);
-
   return (
     <html lang="en">
       <body
@@ -48,7 +47,7 @@ export default async function RootLayout({
             )}
             {data.user ? (
               <h1>
-                こんにちは、<Link href="mypage">{profile.username}</Link>
+                こんにちは、<Link href="/mypage">{profile.username}</Link>
               </h1>
             ) : (
               <Link href={"/auth/login"}>ログイン</Link>

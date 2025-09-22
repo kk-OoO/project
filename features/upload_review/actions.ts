@@ -46,5 +46,5 @@ export async function UploadReviewAction(state: FormState, formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/mypage");
+  redirect(`/chapel/${formData.get("chapelId")}`); // redirect to the chapel page using chapelId
 }

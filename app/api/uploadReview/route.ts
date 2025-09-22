@@ -3,13 +3,21 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function serializeBigInt(obj: any): any {
+  return JSON.parse(
+    JSON.stringify(obj, (key, value) =>
+      typeof value === "bigint" ? value.toString() : value
+    )
+  );
+}
+
 // レビュー投稿
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { chapel_id, user_id, role, rating, comment } = body.review;
+    const { chapelId, userId, role, rating, comment } = body.review;
 
-    if (!chapel_id || !user_id || !role || !rating) {
+    if (!chapelId || !userId || !role || !rating) {
       return new Response(
         JSON.stringify({ message: "必須項目が不足しています" }),
         { status: 400 }
@@ -18,16 +26,18 @@ export async function POST(req: NextRequest) {
 
     const uploadReview = await prisma.reviews.create({
       data: {
-        chapel_id: Number(chapel_id),
-        user_id,
+        chapel_id: Number(chapelId),
+        user_id: userId,
         role,
         rating: Number(rating),
         comment,
       },
     });
+    const serializedUploadReview = serializeBigInt(uploadReview);
 
-    return Response.json(uploadReview);
+    return Response.json(serializedUploadReview);
   } catch (err) {
+    console.log(err);
     console.error("レビュー投稿エラー:", err);
     return new Response(JSON.stringify({ message: "投稿に失敗しました" }), {
       status: 500,

@@ -392,6 +392,16 @@ model reviews {
   @@schema("public")
 }
 
+model favorites {
+  id         Int       @id @default(autoincrement())
+  user_id    String    @db.Uuid
+  chapel_id  Int
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+
+  @@unique([user_id, chapel_id])
+  @@schema("public")
+}
+
 enum aal_level {
   aal1
   aal2
