@@ -2,17 +2,21 @@
 
 import { getReviewByChapelId } from "@/features/review/fetchers";
 import { useEffect, useState } from "react";
+import ReviewItem from "./ReviewItems";
 
+// Define the Review type if not imported from elsewhere
 type Review = {
   id: number;
-  role: "主催者" | "招待客";
   rating: number;
   comment: string;
+  role: "host" | "guest";
+  created_at: string;
   profiles: {
-    username: string;
     profile_image: string | null;
+    username: string;
   };
 };
+
 export default function ReviewsComponent({ chapelId }: { chapelId: number }) {
   const [data, setData] = useState<Review[]>([]);
 
@@ -23,42 +27,54 @@ export default function ReviewsComponent({ chapelId }: { chapelId: number }) {
     };
     fetchData();
   }, [chapelId]);
+
+  const averageRating =
+    data.length > 0
+      ? data.reduce((sum, review) => sum + review.rating, 0) / data.length
+      : 0;
+
   return (
     <div>
-      {data.map((review) => (
-        <div key={review.id} className="border p-4 mb-4 rounded-lg shadow-sm">
-          <div className="flex items-center mb-2">
-            {review.profiles.profile_image ? (
-              <img
-                src={review.profiles.profile_image}
-                alt={review.profiles.username}
-                className="w-10 h-10 rounded-full mr-3"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 flex items-center justify-center">
-                <span className="text-gray-600">N/A</span>
-              </div>
-            )}
-            <div>
-              <p className="font-bold">{review.profiles.username}</p>
-              <p className="text-sm text-gray-600">{review.role}</p>
-            </div>
-          </div>
-          <div className="mb-2">
-            {[...Array(5)].map((_, index) => (
-              <span
-                key={index}
-                className={
-                  index < review.rating ? "text-yellow-400" : "text-gray-300"
-                }
-              >
-                ★
-              </span>
+      <div className="flex p-4">
+        <div>
+          <h2 className="text-xl font-bold mb-4 mt-8 text-center">
+            主催者のレビュー
+          </h2>
+          {data
+            .filter((review) => review.role === "host")
+            .map((review) => (
+              <ReviewItem key={review.id} review={review} />
             ))}
-          </div>
-          <p>{review.comment}</p>
         </div>
-      ))}
+        <div className="w-px m-4 bg-black"></div>
+        <div>
+          <h2 className="text-xl font-bold mb-4 mt-8 text-center">
+            招待客のレビュー
+          </h2>
+          {data
+            .filter((review) => review.role === "guest")
+            .map((review) => (
+              <ReviewItem key={review.id} review={review} />
+            ))}
+        </div>
+      </div>
+      <div className="flex items-center mb-4">
+        {[...Array(5)].map((_, index) => (
+          <span
+            key={index}
+            className={
+              index < Math.round(averageRating)
+                ? "text-yellow-400"
+                : "text-gray-300"
+            }
+          >
+            ★
+          </span>
+        ))}
+        <span className="ml-2 text-gray-600">
+          {averageRating.toFixed(1)} / 5 （{data.length}件）
+        </span>
+      </div>
     </div>
   );
 }

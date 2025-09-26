@@ -47,7 +47,8 @@ export default async function RootLayout({
             )}
             {data.user ? (
               <h1>
-                こんにちは、<Link href="/mypage">{profile.username}</Link>
+                こんにちは、
+                <Link href="/mypage">{profile?.username ?? "ゲスト"}</Link>
               </h1>
             ) : (
               <Link href={"/auth/login"}>ログイン</Link>

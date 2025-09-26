@@ -327,21 +327,6 @@ model users {
   @@schema("auth")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model profiles {
-  id            String    @id @db.Uuid
-  username      String?
-  created_at    DateTime  @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamptz(6)
-  profile_image String?
-  age           Int?
-  gender        String?   @db.VarChar(10)
-  region        String?   @db.VarChar(50)
-  users         users     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  reviews       reviews[]
-
-  @@schema("public")
-}
-
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model oauth_clients {
   id                 String                  @id @db.Uuid
@@ -362,16 +347,79 @@ model oauth_clients {
   @@schema("auth")
 }
 
+model favorites {
+  id         Int       @id @default(autoincrement())
+  user_id    String    @db.Uuid
+  chapel_id  Int
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+
+  @@unique([user_id, chapel_id])
+  @@schema("public")
+}
+
+model chapel_plans {
+  id          Int       @id @default(autoincrement())
+  chapel_id   BigInt?
+  plan_name   String
+  guests      Int
+  total_price Int
+  cuisine     Json?
+  dress       Json?
+  options     Json?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  chapels     chapels?  @relation(fields: [chapel_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  plans       plans[]
+
+  @@schema("public")
+}
+
 model chapels {
-  id       BigInt    @id @default(autoincrement())
-  name     String
-  region   String
-  address  String?
-  url      String?
-  image    String?
-  price    Int?
-  capacity Int?
-  reviews  reviews[]
+  id           BigInt         @id @default(autoincrement())
+  name         String
+  region       String
+  address      String?
+  url          String?
+  image        String?
+  price        Int?
+  capacity     Int?
+  chapel_plans chapel_plans[]
+  plans        plans[]
+  reviews      reviews[]
+
+  @@schema("public")
+}
+
+model plans {
+  id             Int           @id @default(autoincrement())
+  user_id        String?       @db.Uuid
+  chapel_id      BigInt?
+  title          String        @db.VarChar(100)
+  wedding_date   DateTime?     @db.Date
+  budget         Int?
+  guest_count    Int?
+  options        Json?
+  notes          String?
+  created_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  chapel_plan_id Int?
+  chapel_plans   chapel_plans? @relation(fields: [chapel_plan_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_chapel_plan")
+  chapels        chapels?      @relation(fields: [chapel_id], references: [id], onUpdate: NoAction)
+  profiles       profiles?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model profiles {
+  id            String    @id @db.Uuid
+  username      String?
+  created_at    DateTime  @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamptz(6)
+  profile_image String?
+  age           Int?
+  gender        String?   @db.VarChar(10)
+  region        String?   @db.VarChar(50)
+  plans         plans[]
+  users         users     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  reviews       reviews[]
 
   @@schema("public")
 }
@@ -389,16 +437,6 @@ model reviews {
   chapels    chapels?  @relation(fields: [chapel_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   profiles   profiles? @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@schema("public")
-}
-
-model favorites {
-  id         Int       @id @default(autoincrement())
-  user_id    String    @db.Uuid
-  chapel_id  Int
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-
-  @@unique([user_id, chapel_id])
   @@schema("public")
 }
 
